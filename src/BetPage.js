@@ -91,9 +91,15 @@ function App() {
             onChange={(e) => setWager(parseInt(e.target.value) || 0)}
             placeholder="Enter wager amount"
           />
-          <button onClick={() => gamble("low_risk")} disabled={isCooldown}>Low-Risk Gamble</button>
-          <button onClick={() => gamble("high_risk")} disabled={isCooldown}>High-Risk Gamble</button>
-          <button onClick={() => gamble("jackpot_only")} disabled={isCooldown}>Jackpot Gamble</button>
+          <button onClick={() => gamble("low_risk")} disabled={isCooldown} className="low-risk">
+            Low-Risk Gamble
+          </button>
+          <button onClick={() => gamble("high_risk")} disabled={isCooldown} className="high-risk">
+            High-Risk Gamble
+          </button>
+          <button onClick={() => gamble("jackpot_only")} disabled={isCooldown} className="jackpot-only">
+            Jackpot Gamble
+          </button>
           {isCooldown && <p>Cooldown: {cooldownTime} seconds</p>}
           <p>Client Seed: {clientSeed}</p>
           <p>Server Hash: {serverHash}</p>
