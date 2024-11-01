@@ -81,7 +81,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Virtual Casino</h1>
+      <h1>Test Virtual Casino</h1>
       {token ? (
         <div>
           <p>Balance: {balance}</p>
