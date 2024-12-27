@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://aviationweather.gov/adds/dataserver_current/httpparam";
+const BASE_URL = "/adds/dataserver_current/httpparam";
 
 export const fetchMETAR = async (icao) => {
   try {
@@ -8,7 +8,7 @@ export const fetchMETAR = async (icao) => {
       params: {
         dataSource: "metars",
         requestType: "retrieve",
-        format: "json",
+        format: "xml",
         stationString: icao,
         hoursBeforeNow: 1,
         mostRecentForEachStation: "true",
