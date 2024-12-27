@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL =
-  "https://cors-anywhere.herokuapp.com/https://aviationweather.gov/adds/dataserver_current/httpparam";
+  "https://thingproxy.freeboard.io/fetch/https://aviationweather.gov/adds/dataserver_current/httpparam";
 
 export const fetchMETAR = async (icao) => {
   try {
