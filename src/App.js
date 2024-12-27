@@ -7,7 +7,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchMETAR = async () => {
-      const BASE_URL = "https://aviationweather.gov/adds/dataserver_current/httpparam";
+      const BASE_URL = "https://thingproxy.freeboard.io/fetch/https://aviationweather.gov/adds/dataserver_current/httpparam";
 
       try {
         const response = await axios.get(BASE_URL, {
