@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const App = () => {
+  const [metar, setMetar] = useState(null);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchMETAR = async () => {
       const BASE_URL = "https://aviationweather.gov/adds/dataserver_current/httpparam";
@@ -17,16 +20,31 @@ const App = () => {
             mostRecentForEachStation: "true",
           },
         });
-        console.log("METAR Data:", response.data);
-      } catch (error) {
-        console.error("Error fetching METAR:", error);
+        setMetar(response.data); // Store the METAR data
+      } catch (err) {
+        setError("Failed to fetch METAR data. Please check the API or network.");
       }
     };
 
     fetchMETAR();
   }, []);
 
-  return <div>Testing METAR API for KBNA...</div>;
+  return (
+    <div>
+      <h1>METAR Test for KBNA</h1>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!error && (
+        <div>
+          <h2>METAR Data:</h2>
+          {metar ? (
+            <pre>{metar}</pre>
+          ) : (
+            <p>Loading METAR data for KBNA...</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default App;
