@@ -31,7 +31,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>METAR Test for KBNA..</h1>
+      <h1>METAR Test for KBNA...</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!error && (
         <div>
