@@ -39,7 +39,7 @@ const App = () => {
           {metar ? (
             <pre>{metar}</pre>
           ) : (
-            <p>Loading METAR data for KBNA...</p>
+            <p>Loading METAR data for KBNA</p>
           )}
         </div>
       )}
