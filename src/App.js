@@ -7,7 +7,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchMETAR = async () => {
-      const BASE_URL = "https://cors-anywhere.herokuapp.com/https://aviationweather.gov/adds/dataserver_current/httpparam";
+      const BASE_URL = "https://corsproxy.io/?url=https://aviationweather.gov/adds/dataserver_current/httpparam";
 
       try {
         const response = await axios.get(BASE_URL, {
