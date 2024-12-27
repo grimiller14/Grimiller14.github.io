@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "/adds/dataserver_current/httpparam";
+const BASE_URL =
+  "https://cors-anywhere.herokuapp.com/https://aviationweather.gov/adds/dataserver_current/httpparam";
 
 export const fetchMETAR = async (icao) => {
   try {
