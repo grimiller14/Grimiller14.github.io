@@ -137,7 +137,10 @@ const App = () => {
             {kingUnit !== null && kingUnit !== undefined ? 
                 <div>
                     <strong>King Unit:</strong>
-                    {kingUnit.name}
+                    <div>
+                            <img src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
+                            {kingUnit.name}
+                            </div>
                 </div>
             : <></>}
 
@@ -145,7 +148,10 @@ const App = () => {
                 <div>
                     <strong>{trait1}</strong>
                     {ReturnChampsWithTrait(trait1).map((champ, index) => {
-                        return (<div key={index}>{champ.name}</div>)
+                        return (<div key={index}>
+                            <img src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
+                            {champ.name}
+                            </div>)
                     })}
                 </div> 
             : <></>}
@@ -154,7 +160,10 @@ const App = () => {
                 <div>
                     <strong>{trait2}</strong>
                     {ReturnChampsWithTrait(trait2).map((champ, index) => {
-                        return (<div key={index}>{champ.name}</div>)
+                        return (<div key={index}>
+                            <img src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
+                            {champ.name}
+                            </div>)
                     })}
                 </div> 
             : <></>}
