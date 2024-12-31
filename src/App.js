@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import champs from "./data/champs";
-import 'react-image-crop/dist/ReactCrop.css'
-import ReactCrop from 'react-image-crop'
 
 const App = () => {
 
     const [trait1, setTrait1] = useState(null);
     const [trait2, setTrait2] = useState(null);
     const [kingUnit, setKingUnit] = useState(null);
+
+    useEffect(() => {
+        let loaded = false;
+        if (!loaded) {
+            RollComps();
+            loaded = true;
+        }
+        // eslint-disable-next-line
+    }, [])
   
-    const ReturnTraitsOfChamp = (champ) => {
+    const ReturnChampInfo = (champ) => {
         let selected = [];
         Object.values(champs).forEach(element => {
             let found = element.find(item => item.name === champ);
@@ -17,18 +24,7 @@ const App = () => {
                 selected.push(found);
             }
         });
-        return selected[0].traits;
-    }
-  
-    const ReturnCostOfChamp = (champ) => {
-        let selected = [];
-        Object.values(champs).forEach(element => {
-            let found = element.find(item => item.name === champ);
-            if (found !== undefined) {
-                selected.push(found);
-            }
-        });
-        return selected[0].cost;
+        return selected[0];
     }
 
     const ReturnChampsWithTrait = (trait) => {
@@ -130,10 +126,10 @@ const App = () => {
 
     return (
         <div>
-            <button onClick={() => {
+            <button className={"roll-button"} onClick={() => {
                 RollComps();
             }}>
-                roll
+                ROLL
             </button>
 
             {kingUnit !== null && kingUnit !== undefined ? 
