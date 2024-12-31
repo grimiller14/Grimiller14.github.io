@@ -122,7 +122,7 @@ const App = () => {
         // -------------------------------------------------------------------------
 
         setKingUnit(allUnits[randomIntFromInterval(0, allUnits.length - 1)]);
-        
+
         // -------------------------------------------------------------------------
     }
 
@@ -158,6 +158,22 @@ const App = () => {
                     })}
                 </div> 
             : <></>}
+
+            <h1>Rules - King of the Arena</h1>
+            <h2>1. No Turning Back</h2>
+            <div>There is no return! Once you got your team, stick with it.</div>
+            <h2>2. Never surrender</h2>
+            <div>There is always hope!</div>
+            <h2>3. Loyalty is key</h2>
+            <div>You are only allowed to buy champions that belong to the origin/class you are assigned to!</div>
+            <h2>4. Carousel is your Ace in sleeve!</h2>
+            <div>You are allowed to take any champion you want in carousel, so you can expand your team buffs!</div>
+            <h2>5. Play around your king</h2>
+            <div>You have to always buy your king if it's possible and he must be on the field!</div>
+            <h2>6. The king is rich</h2>
+            <div>When you own your king, he has to have the most items!</div>
+            <h2>7. Two kings</h2>
+            <div>The champion with an augmentation is also a king and can be put on the field. One of the both kings must have the most items</div>
 
         </div>
     );
