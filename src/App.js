@@ -62,32 +62,33 @@ const App = () => {
 
     const SelectRandomTrait = () => {
         let allTraits = ReturnAllTraits();
-        let viableTraits = []
+        let viablePrimaryTraits = []
         allTraits.forEach(trait => {
             if (ReturnChampsWithTrait(trait).length !== 1) {
-                viableTraits.push(trait);
+                viablePrimaryTraits.push(trait);
             }
         });
-        let randomNum = randomIntFromInterval(0, viableTraits.length - 1);
-        return viableTraits[randomNum];
+        let randomNum = randomIntFromInterval(0, viablePrimaryTraits.length - 1);
+        return viablePrimaryTraits[randomNum];
     }
 
     const SelectRandomSecondaryTrait = (excludedTrait) => {
         let allTraits = ReturnAllTraits();
-        let viableTraits = []
+        let viableSecondaryTraits = [];
         allTraits.forEach(trait => {
-            if (ReturnChampsWithTrait(trait).length !== 1 || trait !== excludedTrait) {
-                viableTraits.push(trait);
+            if (ReturnChampsWithTrait(trait).length !== 1 && trait !== excludedTrait) {
+                viableSecondaryTraits.push(trait);
             }
         });
-        let randomNum = randomIntFromInterval(0, viableTraits.length - 1);
-        return viableTraits[randomNum];
+        viableSecondaryTraits.sort();
+        let randomNum = randomIntFromInterval(0, viableSecondaryTraits.length - 1);
+        return viableSecondaryTraits[randomNum];
     }
 
     const RollComps = () => {
         let randomTrait = SelectRandomTrait();
         setTrait1(randomTrait);
-        let randomTrait2 = SelectRandomSecondaryTrait(trait1);
+        let randomTrait2 = SelectRandomSecondaryTrait(randomTrait);
         setTrait2(randomTrait2);
         PickKingUnit(randomTrait, randomTrait2);
     }
@@ -104,6 +105,8 @@ const App = () => {
                 allUnits.push(champ);
             }
         })
+
+        // -------------------------------------------------------------------------
         // USE THIS SECTION IF YOU WANT IT TO BE A 2 COST KING
         // -------------------------------------------------------------------------
 
@@ -125,64 +128,72 @@ const App = () => {
     }
 
     return (
-        <div>
-            <button className={"roll-button"} onClick={() => {
-                RollComps();
-            }}>
-                ROLL
-            </button>
+        <div className={"column-parent"}>
 
-            {kingUnit !== null && kingUnit !== undefined ? 
-                <div>
-                    <strong>King Unit:</strong>
-                    <div className={"image-container champ-cost-" + kingUnit.cost}>
-                        <img title={kingUnit.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
+            <div className={"left-column"}>
+                {kingUnit !== null && kingUnit !== undefined ? 
+                    <div>
+                        <h1 className={"king-champ-title"}>King Unit:</h1>
+                        <h3 className={"king-champ-name"}>{kingUnit.name}</h3>
+                        <div className={"king-container"}>
+                            <div className={"image-container champ-cost-" + kingUnit.cost}>
+                                <img title={kingUnit.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            : <></>}
+                : <></>}
 
-            {trait1 !== null ? 
-                <div>
-                    <strong>{trait1}</strong>
-                    <div className={"primary-trait-container"}>
-                    {ReturnChampsWithTrait(trait1).map((champ, index) => {
-                        return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
-                                <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
-                            </div>)
-                    })}
-                    </div>
-                </div> 
-            : <></>}
+                {trait1 !== null ? 
+                    <div>
+                        <h2>{trait1}</h2>
+                        <div className={"primary-trait-container"}>
+                        {ReturnChampsWithTrait(trait1).map((champ, index) => {
+                            return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
+                                    <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
+                                </div>)
+                        })}
+                        </div>
+                    </div> 
+                : <></>}
 
-            {trait2 !== null ? 
-                <div>
-                    <strong>{trait2}</strong>
-                    <div className={"secondary-trait-container"}>
-                    {ReturnChampsWithTrait(trait2).map((champ, index) => {
-                        return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
-                                <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
-                            </div>)
-                    })}
-                    </div>
-                </div> 
-            : <></>}
+                {trait2 !== null ? 
+                    <div>
+                        <h2>{trait2}</h2>
+                        <div className={"secondary-trait-container"}>
+                        {ReturnChampsWithTrait(trait2).map((champ, index) => {
+                            return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
+                                    <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
+                                </div>)
+                        })}
+                        </div>
+                    </div> 
+                : <></>}
+            </div>
 
-            <h1>Rules - King of the Arena</h1>
-            <h2>1. No Turning Back</h2>
-            <div>There is no return! Once you got your team, stick with it.</div>
-            <h2>2. Never surrender</h2>
-            <div>There is always hope!</div>
-            <h2>3. Loyalty is key</h2>
-            <div>You are only allowed to buy champions that belong to the origin/class you are assigned to!</div>
-            <h2>4. Carousel is your Ace in sleeve!</h2>
-            <div>You are allowed to take any champion you want in carousel, so you can expand your team buffs!</div>
-            <h2>5. Play around your king</h2>
-            <div>You have to always buy your king if it's possible and he must be on the field!</div>
-            <h2>6. The king is rich</h2>
-            <div>When you own your king, he has to have the most items!</div>
-            <h2>7. Two kings</h2>
-            <div>The champion with an augmentation is also a king and can be put on the field. One of the both kings must have the most items</div>
+            <div className={"right-column"}>
+                <button className={"roll-button"} onClick={() => {
+                    RollComps();
+                }}>
+                    ROLL
+                </button>
 
+                <h1>Rules - King of the Arena</h1>
+                <h2>1. No Turning Back</h2>
+                <div>There is no return! Once you got your team, stick with it.</div>
+                <h2>2. Never surrender</h2>
+                <div>There is always hope!</div>
+                <h2>3. Loyalty is key</h2>
+                <div>You are only allowed to buy champions that belong to the origin/class you are assigned to!</div>
+                <h2>4. Carousel is your Ace in sleeve!</h2>
+                <div>You are allowed to take any champion you want in carousel, so you can expand your team buffs!</div>
+                <h2>5. Play around your king</h2>
+                <div>You have to always buy your king if it's possible and he must be on the field!</div>
+                <h2>6. The king is rich</h2>
+                <div>When you own your king, he has to have the most items!</div>
+                <h2>7. Two kings</h2>
+                <div>The champion with an augmentation is also a king and can be put on the field. One of the both kings must have the most items</div>
+
+            </div>
         </div>
     );
 };

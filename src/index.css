@@ -1,3 +1,9 @@
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #212529;
+    color: rgb(173, 181, 189);
+}
+
 .champ-cost-1 {
     border: 3px solid rgb(181, 181, 181);
 }
@@ -29,20 +35,41 @@
     height: 64px;
 }
 
+.image-container:not(:first-child) {
+    margin-left: 5px;
+}
+
 .image-container img {
     position: relative;
     left: -64px;
     width: 128px;
 }
 
+.king-container {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    padding: 5px;
+    background-color: darkgreen;
+    border-radius: 8px;
+}
+
 .primary-trait-container {
     display: flex;
     flex-direction: row;
+    width: fit-content;
+    padding: 5px;
+    background-color: darkgreen;
+    border-radius: 8px;
 }
 
 .secondary-trait-container {
     display: flex;
     flex-direction: row;
+    width: fit-content;
+    padding: 5px;
+    background-color: darkgreen;
+    border-radius: 8px;
 }
 
 .roll-button {
@@ -54,4 +81,36 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 20px;
+}
+
+.column-parent {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-column {
+    width: 50%;
+}
+
+.right-column {
+    width: 50%;
+}
+
+h1 {
+    color: white;
+}
+
+h2 {
+    margin-bottom: 0;
+    color: white;
+}
+
+.king-champ-title {
+    margin-bottom: 0;
+}
+
+.king-champ-name {
+    margin-top: 0;
+    margin-bottom: 3px;
+    color: rgb(173, 181, 189);
 }
