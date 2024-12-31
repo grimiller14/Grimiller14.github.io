@@ -7,6 +7,9 @@ const App = () => {
     const [trait2, setTrait2] = useState(null);
     const [kingUnit, setKingUnit] = useState(null);
 
+    const [useFixedLevel, setUseFixedLevel] = useState(false);
+    const [fixedLevel, setFixedLevel] = useState(2);
+
     useEffect(() => {
         let loaded = false;
         if (!loaded) {
@@ -86,11 +89,28 @@ const App = () => {
     }
 
     const RollComps = () => {
-        let randomTrait = SelectRandomTrait();
-        setTrait1(randomTrait);
-        let randomTrait2 = SelectRandomSecondaryTrait(randomTrait);
-        setTrait2(randomTrait2);
-        PickKingUnit(randomTrait, randomTrait2);
+        if (useFixedLevel) {
+            let viableChamps = []
+            ReturnAllTraits().forEach(trait => {
+                ReturnChampsWithTrait(trait).forEach(champ => {
+                    if (champ.cost === fixedLevel) {
+                        viableChamps.push(champ);
+                    }
+                });
+            });
+            let selectedUnit = viableChamps[randomIntFromInterval(0, viableChamps.length - 1)]
+            setKingUnit(selectedUnit);
+            let primaryTrait = selectedUnit.traits[randomIntFromInterval(0, selectedUnit.traits.length - 1)]
+            setTrait1(primaryTrait);
+            let randomTrait2 = SelectRandomSecondaryTrait(primaryTrait);
+            setTrait2(randomTrait2);
+        } else {
+            let randomTrait = SelectRandomTrait();
+            setTrait1(randomTrait);
+            let randomTrait2 = SelectRandomSecondaryTrait(randomTrait);
+            setTrait2(randomTrait2);
+            PickKingUnit(randomTrait, randomTrait2);
+        }
     }
 
     const PickKingUnit = (selectedTrait1, selectedTrait2) => {
@@ -99,32 +119,24 @@ const App = () => {
             if (allUnits.indexOf(champ) === -1) {
                 allUnits.push(champ);
             }
-        })
+        });
         ReturnChampsWithTrait(selectedTrait2).forEach(champ => {
             if (allUnits.indexOf(champ) === -1) {
                 allUnits.push(champ);
             }
-        })
+        });
 
-        // -------------------------------------------------------------------------
-        // USE THIS SECTION IF YOU WANT IT TO BE A 2 COST KING
-        // -------------------------------------------------------------------------
-
-        // let viableUnits = [];
-        // allUnits.forEach(champ => {
-        //     if (ReturnCostOfChamp(champ.name) === 2) {
-        //         viableUnits.push(champ);
-        //     }
-        // })
-        // setKingUnit(viableUnits[randomIntFromInterval(0, viableUnits.length - 1)]);
-
-        // -------------------------------------------------------------------------
-        // OTHERWISE USE THIS ONE
-        // -------------------------------------------------------------------------
-
-        setKingUnit(allUnits[randomIntFromInterval(0, allUnits.length - 1)]);
-
-        // -------------------------------------------------------------------------
+        if (useFixedLevel) {
+            let viableUnits = [];
+            allUnits.forEach(champ => {
+                if (ReturnChampInfo(champ.name).cost === fixedLevel) {
+                    viableUnits.push(champ);
+                }
+            })
+            setKingUnit(viableUnits[randomIntFromInterval(0, viableUnits.length - 1)]);
+        } else {
+            setKingUnit(allUnits[randomIntFromInterval(0, allUnits.length - 1)]);
+        }
     }
 
     return (
@@ -168,6 +180,30 @@ const App = () => {
                         </div>
                     </div> 
                 : <></>}
+
+                <div className={"options-box"}>
+                    <h1 className={"options-title"}>
+                        Options
+                    </h1>
+                    <input type={"checkbox"}
+                        defaultValue={useFixedLevel}
+                        id={"setLevelOfKing"}
+                        onChange={(e) => {
+                            setUseFixedLevel(e.target.checked);
+                    }}/>
+                    <label for={"setLevelOfKing"} className={"no-highlight"}>Fixed Level of King?</label>
+                    {useFixedLevel ? 
+                        <input className={"level-input-box"} 
+                            type={"number"}
+                            min={1}
+                            max={5}
+                            defaultValue={fixedLevel}
+                            onChange={(e) => {
+                                setFixedLevel(parseInt(e.target.value));
+                            }}
+                        />
+                    : <></> }
+                </div>
             </div>
 
             <div className={"right-column"}>

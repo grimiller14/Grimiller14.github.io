@@ -114,3 +114,25 @@ h2 {
     margin-bottom: 3px;
     color: rgb(173, 181, 189);
 }
+
+.options-box {
+    margin-top: 2rem;
+    background-color: #30363b;
+    width: 25rem;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.options-title {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.no-highlight {
+    user-select: none;
+}
+
+.level-input-box {
+    width: 5rem;
+    margin-left: 8px;
+}
