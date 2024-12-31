@@ -224,11 +224,7 @@ var champs = {
             "name": "Scar",
             "imgFull": "TFT13_Flyguy.TFT_Set13.png",
             "traits": ["Firelight", "Watcher"],
-            "cost": 3,
-            "x": 48,
-            "y": 48,
-            "w": 48,
-            "h": 48,
+            "cost": 3
         },
         {
             "name": "Smeech",

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import champs from "./data/champs";
+import 'react-image-crop/dist/ReactCrop.css'
+import ReactCrop from 'react-image-crop'
 
 const App = () => {
 
@@ -137,34 +139,35 @@ const App = () => {
             {kingUnit !== null && kingUnit !== undefined ? 
                 <div>
                     <strong>King Unit:</strong>
-                    <div>
-                            <img src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
-                            {kingUnit.name}
-                            </div>
+                    <div className={"image-container champ-cost-" + kingUnit.cost}>
+                        <img title={kingUnit.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
+                    </div>
                 </div>
             : <></>}
 
             {trait1 !== null ? 
                 <div>
                     <strong>{trait1}</strong>
+                    <div className={"primary-trait-container"}>
                     {ReturnChampsWithTrait(trait1).map((champ, index) => {
-                        return (<div key={index}>
-                            <img src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
-                            {champ.name}
+                        return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
+                                <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
                             </div>)
                     })}
+                    </div>
                 </div> 
             : <></>}
 
             {trait2 !== null ? 
                 <div>
                     <strong>{trait2}</strong>
+                    <div className={"secondary-trait-container"}>
                     {ReturnChampsWithTrait(trait2).map((champ, index) => {
-                        return (<div key={index}>
-                            <img src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
-                            {champ.name}
+                        return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
+                                <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
                             </div>)
                     })}
+                    </div>
                 </div> 
             : <></>}
 

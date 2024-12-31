@@ -1,0 +1,46 @@
+.champ-cost-1 {
+    border: 3px solid rgb(181, 181, 181);
+}
+
+.champ-cost-2 {
+    border: 3px solid rgb(20, 207, 17);
+}
+
+.champ-cost-3 {
+    border: 3px solid rgb(44, 118, 233);
+}
+
+.champ-cost-4 {
+    border: 3px solid rgb(219, 31, 233);
+}
+
+.champ-cost-5 {
+    border: 3px solid rgb(184, 163, 28);
+}
+
+.champ-cost-6 {
+    border: 3px solid rgb(151, 201, 255);
+}
+
+.image-container {
+    overflow: hidden;
+    width: 64px;
+    border-radius: 5px;
+    height: 64px;
+}
+
+.image-container img {
+    position: relative;
+    left: -64px;
+    width: 128px;
+}
+
+.primary-trait-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.secondary-trait-container {
+    display: flex;
+    flex-direction: row;
+}
