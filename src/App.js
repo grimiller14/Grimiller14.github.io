@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import champs from "./data/champs";
+import { ReactComponent as Crown } from './media/crown-2.svg';
 
 const App = () => {
 
@@ -8,7 +9,8 @@ const App = () => {
     const [kingUnit, setKingUnit] = useState(null);
 
     const [useFixedLevel, setUseFixedLevel] = useState(false);
-    const [fixedLevel, setFixedLevel] = useState(2);
+    const [fixedMinLevel, setFixedMinLevel] = useState(2);
+    const [fixedMaxLevel, setFixedMaxLevel] = useState(2);
 
     useEffect(() => {
         let loaded = false;
@@ -19,16 +21,16 @@ const App = () => {
         // eslint-disable-next-line
     }, [])
   
-    const ReturnChampInfo = (champ) => {
-        let selected = [];
-        Object.values(champs).forEach(element => {
-            let found = element.find(item => item.name === champ);
-            if (found !== undefined) {
-                selected.push(found);
-            }
-        });
-        return selected[0];
-    }
+    // const ReturnChampInfo = (champ) => {
+    //     let selected = [];
+    //     Object.values(champs).forEach(element => {
+    //         let found = element.find(item => item.name === champ);
+    //         if (found !== undefined) {
+    //             selected.push(found);
+    //         }
+    //     });
+    //     return selected[0];
+    // }
 
     const ReturnChampsWithTrait = (trait) => {
         let selected = [];
@@ -93,7 +95,7 @@ const App = () => {
             let viableChamps = []
             ReturnAllTraits().forEach(trait => {
                 ReturnChampsWithTrait(trait).forEach(champ => {
-                    if (champ.cost === fixedLevel) {
+                    if (champ.cost <= fixedMaxLevel && champ.cost >= fixedMinLevel) {
                         viableChamps.push(champ);
                     }
                 });
@@ -126,16 +128,20 @@ const App = () => {
             }
         });
 
-        if (useFixedLevel) {
-            let viableUnits = [];
-            allUnits.forEach(champ => {
-                if (ReturnChampInfo(champ.name).cost === fixedLevel) {
-                    viableUnits.push(champ);
-                }
-            })
-            setKingUnit(viableUnits[randomIntFromInterval(0, viableUnits.length - 1)]);
-        } else {
-            setKingUnit(allUnits[randomIntFromInterval(0, allUnits.length - 1)]);
+        setKingUnit(allUnits[randomIntFromInterval(0, allUnits.length - 1)]);
+    }
+
+    const ChangeMinLevel = (level) => {
+        setFixedMinLevel(level);
+        if (level > fixedMaxLevel) {
+            setFixedMaxLevel(level);
+        }
+    }
+
+    const ChangeMaxLevel = (level) => {
+        setFixedMaxLevel(level);
+        if (level < fixedMaxLevel) {
+            setFixedMinLevel(level);
         }
     }
 
@@ -148,6 +154,7 @@ const App = () => {
                         <h1 className={"king-champ-title"}>King Unit:</h1>
                         <h3 className={"king-champ-name"}>{kingUnit.name}</h3>
                         <div className={"king-container"}>
+                            <Crown className={"crown"}/>
                             <div className={"image-container champ-cost-" + kingUnit.cost}>
                                 <img title={kingUnit.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
                             </div>
@@ -185,24 +192,42 @@ const App = () => {
                     <h1 className={"options-title"}>
                         Options
                     </h1>
-                    <input type={"checkbox"}
-                        defaultValue={useFixedLevel}
-                        id={"setLevelOfKing"}
-                        onChange={(e) => {
-                            setUseFixedLevel(e.target.checked);
-                    }}/>
-                    <label for={"setLevelOfKing"} className={"no-highlight"}>Fixed Level of King?</label>
-                    {useFixedLevel ? 
-                        <input className={"level-input-box"} 
-                            type={"number"}
-                            min={1}
-                            max={5}
-                            defaultValue={fixedLevel}
+                    <div className={"option-line"}>
+
+                        <input type={"checkbox"}
+                            defaultValue={useFixedLevel}
+                            id={"setLevelOfKing"}
                             onChange={(e) => {
-                                setFixedLevel(parseInt(e.target.value));
-                            }}
-                        />
-                    : <></> }
+                                setUseFixedLevel(e.target.checked);
+                        }}/>
+                        <label for={"setLevelOfKing"} className={"no-highlight"}>Fixed level of king?</label>
+                        {useFixedLevel ? 
+                            <div>
+                                &nbsp;
+                                Min:
+                                <input className={"level-input-box"} 
+                                    type={"number"}
+                                    min={1}
+                                    max={6}
+                                    value={fixedMinLevel}
+                                    onChange={(e) => {
+                                        ChangeMinLevel(parseInt(e.target.value));
+                                    }}
+                                />
+                                &nbsp;
+                                Max:
+                                <input className={"level-input-box"} 
+                                    type={"number"}
+                                    min={1}
+                                    max={6}
+                                    value={fixedMaxLevel}
+                                    onChange={(e) => {
+                                        ChangeMaxLevel(parseInt(e.target.value));
+                                    }}
+                                />
+                            </div>
+                        : <></> }
+                    </div>
                 </div>
             </div>
 
@@ -226,8 +251,6 @@ const App = () => {
                 <div>You have to always buy your king if it's possible and he must be on the field!</div>
                 <h2>6. The king is rich</h2>
                 <div>When you own your king, he has to have the most items!</div>
-                <h2>7. Two kings</h2>
-                <div>The champion with an augmentation is also a king and can be put on the field. One of the both kings must have the most items</div>
 
             </div>
         </div>
