@@ -251,6 +251,8 @@ const App = () => {
                 <div>You have to always buy your king if it's possible and he must be on the field!</div>
                 <h2>6. The king is rich</h2>
                 <div>When you own your king, he has to have the most items!</div>
+                <h2>7. The king is weird</h2>
+                <div>The king must have the anomaly!</div>
 
             </div>
         </div>
