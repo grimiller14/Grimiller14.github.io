@@ -12,6 +12,9 @@ const App = () => {
     const [fixedMinLevel, setFixedMinLevel] = useState(2);
     const [fixedMaxLevel, setFixedMaxLevel] = useState(2);
 
+    const [hoveredName, setHoveredName] = useState(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
     useEffect(() => {
         let loaded = false;
         if (!loaded) {
@@ -145,6 +148,19 @@ const App = () => {
         }
     }
 
+    const handleMouseEnter = (name, e) => {
+        setHoveredName(name);
+        setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    const handleMouseMove = (e) => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    const handleMouseLeave = () => {
+        setHoveredName(null);
+    };
+
     return (
         <div className={"column-parent"}>
 
@@ -156,7 +172,31 @@ const App = () => {
                         <div className={"king-container"}>
                             <Crown className={"crown"}/>
                             <div className={"image-container champ-cost-" + kingUnit.cost}>
-                                <img title={kingUnit.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull} alt={kingUnit.name} />
+                            <img title={kingUnit.name}
+                                    className={"small-champ"}
+                                    src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + kingUnit.imgFull}
+                                    name={"king - " + kingUnit.name}
+                                    onMouseEnter={(e) => {
+                                        handleMouseEnter("king - " + kingUnit.name, e);
+                                    }}
+                                    onMouseMove={handleMouseMove}
+                                    onMouseLeave={handleMouseLeave}
+                                    alt={kingUnit.name} />
+
+                                    {hoveredName === "king - " + kingUnit.name && (
+                                        <div 
+                                            className={"trait-box"}
+                                            style={{
+                                                left: mousePosition.x + 10,
+                                                top: mousePosition.y + 10,
+                                            }}
+                                        >
+                                            <h3 className={"trait-header"}>{kingUnit.name}</h3>
+                                            {kingUnit.traits.map((trait, index) => {
+                                                return (<div className={"trait-line"} key={index}>{trait}</div>)
+                                            })}
+                                        </div>
+                                    )}
                             </div>
                         </div>
                     </div>
@@ -168,8 +208,32 @@ const App = () => {
                         <div className={"primary-trait-container"}>
                         {ReturnChampsWithTrait(trait1).map((champ, index) => {
                             return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
-                                    <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
-                                </div>)
+                                <img title={champ.name}
+                                    className={"small-champ"}
+                                    src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull}
+                                    name={"trait1 - " + champ.name}
+                                    onMouseEnter={(e) => {
+                                        handleMouseEnter("trait1 - " + champ.name, e);
+                                    }}
+                                    onMouseMove={handleMouseMove}
+                                    onMouseLeave={handleMouseLeave}
+                                    alt={champ.name} />
+
+                                    {hoveredName === "trait1 - " + champ.name && (
+                                        <div 
+                                            className={"trait-box"}
+                                            style={{
+                                                left: mousePosition.x + 10,
+                                                top: mousePosition.y + 10,
+                                            }}
+                                        >
+                                            <h3 className={"trait-header"}>{champ.name}</h3>
+                                            {champ.traits.map((trait, index) => {
+                                                return (<div className={"trait-line"} key={index}>{trait}</div>)
+                                            })}
+                                        </div>
+                                    )}
+                            </div>)
                         })}
                         </div>
                     </div> 
@@ -181,7 +245,31 @@ const App = () => {
                         <div className={"secondary-trait-container"}>
                         {ReturnChampsWithTrait(trait2).map((champ, index) => {
                             return (<div key={index} className={"image-container champ-cost-" + champ.cost}>
-                                    <img title={champ.name} className={"small-champ"} src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull} alt={champ.name} />
+                                    <img title={champ.name}
+                                        className={"small-champ"}
+                                        src={"https://ddragon.leagueoflegends.com/cdn/14.24.1/img/tft-champion/" + champ.imgFull}
+                                        name={"trait2 - " + champ.name}
+                                        onMouseEnter={(e) => {
+                                            handleMouseEnter("trait2 - " + champ.name, e);
+                                        }}
+                                        onMouseMove={handleMouseMove}
+                                        onMouseLeave={handleMouseLeave}
+                                        alt={champ.name} />
+
+                                        {hoveredName === "trait2 - " + champ.name && (
+                                            <div 
+                                                className={"trait-box"}
+                                                style={{
+                                                    left: mousePosition.x + 10,
+                                                    top: mousePosition.y + 10,
+                                                }}
+                                            >
+                                                <h3 className={"trait-header"}>{champ.name}</h3>
+                                                {champ.traits.map((trait, index) => {
+                                                    return (<div className={"trait-line"} key={index}>{trait}</div>)
+                                                })}
+                                            </div>
+                                        )}
                                 </div>)
                         })}
                         </div>
@@ -255,6 +343,7 @@ const App = () => {
                 <div>The king must have the anomaly!</div>
 
             </div>
+
         </div>
     );
 };

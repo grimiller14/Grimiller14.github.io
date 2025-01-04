@@ -152,3 +152,22 @@ h2 {
     top: 88px;
     rotate: 45deg;
 }
+
+.trait-box {
+    position: fixed;
+    background-color: #30363b;
+    padding: 8px;
+    border-radius: 4px;
+    color: white;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.trait-header {
+    margin: 0;
+}
+
+.trait-line {
+    color: rgb(173, 181, 189);
+}
