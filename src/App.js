@@ -1,28 +1,53 @@
-import React, { useState, useEffect } from "react";
-import items from "./data/items";
+import React, { useState, useEffect, useRef } from "react";
+import extraKinks from "./data/extra-kinks";
+import basicKinks from "./data/basic-kinks";
 
 const App = () => {
+    const [selectedExtra, setSelectedExtra] = useState('');
+    const [selectedBasic, setSelectedBasic] = useState('');
 
-    const [selectedItem, setSelectedItem] = useState('');
+    const lastExtraIndexRef = useRef(null);
+    const lastBasicIndexRef = useRef(null);
 
-    const handlePick = () => {
-        const randomIndex = Math.floor(Math.random() * items.length);
-        setSelectedItem(items[randomIndex]);
+    const pickRandomItem = (items, lastIndexRef, setSelected) => {
+        if (items.length < 2) {
+            setSelected(items[0] || '');
+            return;
+        }
+
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * items.length);
+        } while (randomIndex === lastIndexRef.current);
+
+        lastIndexRef.current = randomIndex;
+        setSelected(items[randomIndex]);
+    };
+
+    const handleExtraPick = () => {
+        pickRandomItem(extraKinks, lastExtraIndexRef, setSelectedExtra);
+    };
+
+    const handleBasicPick = () => {
+        pickRandomItem(basicKinks, lastBasicIndexRef, setSelectedBasic);
     };
 
     useEffect(() => {
-        let loaded = false;
-        if (!loaded) {
-            loaded = true;
-            handlePick();
-        }
-        // eslint-disable-next-line
-    }, [])
+        handleExtraPick();
+        handleBasicPick();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div>
-            <button type={'button'} onClick={handlePick}>roll</button>
-            <div>{selectedItem}</div>
+            <div>
+                <div>{selectedBasic}</div>
+                <button type="button" onClick={handleBasicPick}>roll basic</button>
+            </div>
+            <div>
+                <div>{selectedExtra}</div>
+                <button type="button" onClick={handleExtraPick}>roll extra</button>
+            </div>
         </div>
     );
 };

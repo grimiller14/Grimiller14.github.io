@@ -1,5 +1,5 @@
 {
-  "short_name": "TFT Ultimate Bravery v2",
+  "short_name": "Fun Generator",
   "name": "Create React App Sample",
   "icons": [
     {
@@ -8,13 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
+      "src": "logo192.jpg",
+      "type": "image/jpg",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
+      "src": "logo512.jpg",
+      "type": "image/jpg",
       "sizes": "512x512"
     }
   ],
