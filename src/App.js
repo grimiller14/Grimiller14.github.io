@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import extraKinks from "./data/extra-kinks";
 import basicKinks from "./data/basic-kinks";
-import "./App.css";
 
 const App = () => {
     const [selectedItem, setSelectedItem] = useState('');
