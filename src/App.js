@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import extraKinks from "./data/extra-kinks";
 import basicKinks from "./data/basic-kinks";
+import "./App.css";
 
 const App = () => {
-    const [selectedExtra, setSelectedExtra] = useState('');
-    const [selectedBasic, setSelectedBasic] = useState('');
+    const [selectedItem, setSelectedItem] = useState('');
 
     const lastExtraIndexRef = useRef(null);
     const lastBasicIndexRef = useRef(null);
 
-    const pickRandomItem = (items, lastIndexRef, setSelected) => {
-        if (items.length < 2) {
-            setSelected(items[0] || '');
-            return;
-        }
+    const pickRandomItem = (items, lastIndexRef) => {
+        if (items.length === 0) return '';
+        if (items.length === 1) return items[0];
 
         let randomIndex;
         do {
@@ -21,32 +19,31 @@ const App = () => {
         } while (randomIndex === lastIndexRef.current);
 
         lastIndexRef.current = randomIndex;
-        setSelected(items[randomIndex]);
+        return items[randomIndex];
     };
 
-    const handleExtraPick = () => {
-        pickRandomItem(extraKinks, lastExtraIndexRef, setSelectedExtra);
+    const handlePickBasic = () => {
+        const item = pickRandomItem(basicKinks, lastBasicIndexRef);
+        setSelectedItem(item);
     };
 
-    const handleBasicPick = () => {
-        pickRandomItem(basicKinks, lastBasicIndexRef, setSelectedBasic);
+    const handlePickExtra = () => {
+        const item = pickRandomItem(extraKinks, lastExtraIndexRef);
+        setSelectedItem(item);
     };
-
-    useEffect(() => {
-        handleExtraPick();
-        handleBasicPick();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
-        <div>
-            <div>
-                <div>{selectedBasic}</div>
-                <button type="button" onClick={handleBasicPick}>roll basic</button>
+        <div className="app-container">
+            <div className="display-area">
+                {selectedItem || "Click a button to start"}
             </div>
-            <div>
-                <div>{selectedExtra}</div>
-                <button type="button" onClick={handleExtraPick}>roll extra</button>
+            <div className="button-bar">
+                <button className="pick-button" onClick={handlePickBasic}>
+                    Roll Basic
+                </button>
+                <button className="pick-button" onClick={handlePickExtra}>
+                    Roll Extra
+                </button>
             </div>
         </div>
     );
