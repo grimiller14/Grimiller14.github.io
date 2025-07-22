@@ -41,17 +41,31 @@
     pointer-events: none;
 }
 
-/* Button Bar */
 .button-bar {
     position: sticky;
     bottom: 0;
     background-color: #fff;
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     border-top: 1px solid #ccc;
     z-index: 10;
+}
+
+/* Wrap roll buttons in consistent vertical space */
+.main-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Undo/Redo stays small and inline */
+.undo-redo-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 /* Roll Buttons */
@@ -79,14 +93,6 @@
 .pick-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-/* Undo/Redo Bar */
-.undo-redo-bar {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
 }
 
 .small-button {
