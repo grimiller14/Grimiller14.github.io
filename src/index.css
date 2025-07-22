@@ -8,11 +8,14 @@
 
 .display-area {
     flex: 1;
-    position: relative;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 260px); /* adjusts based on expected button area */
+    box-sizing: border-box;
 }
 
 .display-text {
@@ -22,9 +25,10 @@
     padding: 0 1rem;
 }
 
+/* Constrain image to same vertical space */
 .position-image {
     max-width: 100%;
-    max-height: 80vh;
+    max-height: 100%;
     object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
