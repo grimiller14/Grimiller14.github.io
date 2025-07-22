@@ -4,17 +4,17 @@ import basicKinks from "./data/basic-kinks";
 import positions from "./data/positions";
 
 const App = () => {
-    const [selectedContent, setSelectedContent] = useState(null); // string or image URL
+    const [selectedContent, setSelectedContent] = useState(null);
     const [isImage, setIsImage] = useState(false);
     const [imageLoading, setImageLoading] = useState(false);
-    const [prevContent, setPrevContent] = useState(null); // for undo
-    const [prevIsImage, setPrevIsImage] = useState(false);
+
+    const [history, setHistory] = useState([]);
+    const [redoStack, setRedoStack] = useState([]);
 
     const [currentImage, setCurrentImage] = useState(null);
     const [nextImage, setNextImage] = useState(null);
 
-    // Placeholder for future favorites logic
-    const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState([]); // placeholder
 
     const lastExtraIndexRef = useRef(null);
     const lastBasicIndexRef = useRef(null);
@@ -42,7 +42,6 @@ const App = () => {
         return items[randomIndex];
     };
 
-    // Initialize first nextImage
     useEffect(() => {
         if (!nextImage && positions.length > 0) {
             const first = pickRandomItem(positions, lastPositionIndexRef);
@@ -52,11 +51,19 @@ const App = () => {
         }
     }, [nextImage, positions]);
 
-    const handlePickBasic = () => {
-        const item = pickRandomItem(basicKinks, lastBasicIndexRef);
-        setPrevContent(selectedContent);
-        setPrevIsImage(isImage);
+    const pushToHistory = () => {
+        if (selectedContent !== null) {
+            setHistory(prev => {
+                const updated = [...prev, { content: selectedContent, isImage }];
+                return updated.slice(-10);
+            });
+            setRedoStack([]); // Clear redo on new action
+        }
+    };
 
+    const handlePickBasic = () => {
+        pushToHistory();
+        const item = pickRandomItem(basicKinks, lastBasicIndexRef);
         setSelectedContent(item);
         setIsImage(false);
         setImageLoading(false);
@@ -64,10 +71,8 @@ const App = () => {
     };
 
     const handlePickExtra = () => {
+        pushToHistory();
         const item = pickRandomItem(extraKinks, lastExtraIndexRef);
-        setPrevContent(selectedContent);
-        setPrevIsImage(isImage);
-
         setSelectedContent(item);
         setIsImage(false);
         setImageLoading(false);
@@ -77,9 +82,7 @@ const App = () => {
     const handlePickImage = () => {
         if (!nextImage) return;
 
-        setPrevContent(currentImage);
-        setPrevIsImage(true);
-
+        pushToHistory();
         setImageLoading(true);
         setSelectedContent(nextImage);
         setCurrentImage(nextImage);
@@ -88,17 +91,36 @@ const App = () => {
 
         const upcoming = pickRandomItem(positions, lastPositionIndexRef);
         setNextImage(upcoming);
-
         const preload = new Image();
         preload.src = upcoming;
     };
 
     const handleUndo = () => {
-        if (prevContent !== null) {
-            setSelectedContent(prevContent);
-            setIsImage(prevIsImage);
+        setHistory(prev => {
+            if (prev.length === 0) return prev;
+
+            const last = prev[prev.length - 1];
+            setRedoStack(r => [...r, { content: selectedContent, isImage }]);
+            setSelectedContent(last.content);
+            setIsImage(last.isImage);
             setImageLoading(false);
-        }
+
+            return prev.slice(0, -1);
+        });
+    };
+
+    const handleRedo = () => {
+        setRedoStack(prev => {
+            if (prev.length === 0) return prev;
+
+            const last = prev[prev.length - 1];
+            setHistory(h => [...h, { content: selectedContent, isImage }]);
+            setSelectedContent(last.content);
+            setIsImage(last.isImage);
+            setImageLoading(false);
+
+            return prev.slice(0, -1);
+        });
     };
 
     return (
@@ -142,13 +164,23 @@ const App = () => {
                 >
                     Roll Position
                 </button>
-                <button
-                    className="pick-button"
-                    onClick={handleUndo}
-                    disabled={!prevContent}
-                >
-                    Undo
-                </button>
+
+                <div className="undo-redo-bar">
+                    <button
+                        className="small-button"
+                        onClick={handleUndo}
+                        disabled={history.length === 0}
+                    >
+                        Undo
+                    </button>
+                    <button
+                        className="small-button"
+                        onClick={handleRedo}
+                        disabled={redoStack.length === 0}
+                    >
+                        Redo
+                    </button>
+                </div>
             </div>
         </div>
     );
