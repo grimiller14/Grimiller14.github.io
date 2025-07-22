@@ -26,9 +26,17 @@ body, html, #root {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
     padding: 1rem;
+    font-size: 2rem;
     color: #333;
+}
+
+.position-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .button-bar {
