@@ -151,37 +151,39 @@ const App = () => {
             </div>
 
             <div className="button-bar">
-                <button className="pick-button" onClick={handlePickBasic}>
-                    Roll Basic
-                </button>
-                <button className="pick-button" onClick={handlePickExtra}>
-                    Roll Extra
-                </button>
-                <button
-                    className="pick-button"
-                    onClick={handlePickImage}
-                    disabled={positions.length === 0}
-                >
-                    Roll Position
-                </button>
+    <div className="main-buttons">
+        <button className="pick-button" onClick={handlePickBasic}>
+            Roll Basic
+        </button>
+        <button className="pick-button" onClick={handlePickExtra}>
+            Roll Extra
+        </button>
+        <button
+            className="pick-button"
+            onClick={handlePickImage}
+            disabled={positions.length === 0}
+        >
+            Roll Position
+        </button>
+    </div>
 
-                <div className="undo-redo-bar">
-                    <button
-                        className="small-button"
-                        onClick={handleUndo}
-                        disabled={history.length === 0}
-                    >
-                        Undo
-                    </button>
-                    <button
-                        className="small-button"
-                        onClick={handleRedo}
-                        disabled={redoStack.length === 0}
-                    >
-                        Redo
-                    </button>
-                </div>
-            </div>
+    <div className="undo-redo-bar">
+        <button
+            className="small-button"
+            onClick={handleUndo}
+            disabled={history.length === 0}
+        >
+            Undo
+        </button>
+        <button
+            className="small-button"
+            onClick={handleRedo}
+            disabled={redoStack.length === 0}
+        >
+            Redo
+        </button>
+    </div>
+</div>
         </div>
     );
 };
