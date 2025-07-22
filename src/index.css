@@ -4,170 +4,54 @@ html {
     color: rgb(173, 181, 189);
 }
 
-.champ-cost-1 {
-    border: 3px solid rgb(181, 181, 181);
+/* App.css */
+
+body, html, #root {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
 }
 
-.champ-cost-2 {
-    border: 3px solid rgb(20, 207, 17);
-}
-
-.champ-cost-3 {
-    border: 3px solid rgb(44, 118, 233);
-}
-
-.champ-cost-4 {
-    border: 3px solid rgb(219, 31, 233);
-}
-
-.champ-cost-5 {
-    border: 3px solid rgb(184, 163, 28);
-}
-
-.champ-cost-6 {
-    border: 3px solid rgb(151, 201, 255);
-}
-
-.image-container {
-    overflow: hidden;
-    width: 64px;
-    border-radius: 5px;
-    height: 64px;
-}
-
-.image-container:not(:first-of-type) {
-    margin-left: 5px;
-}
-
-.image-container img {
-    position: relative;
-    left: -64px;
-    width: 128px;
-}
-
-.king-container {
+.app-container {
     display: flex;
-    flex-direction: row;
-    width: fit-content;
-    padding: 5px;
-    background-color: darkgreen;
-    border-radius: 8px;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    text-align: center;
 }
 
-.primary-trait-container {
+.display-area {
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    width: fit-content;
-    padding: 5px;
-    background-color: darkgreen;
-    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 1rem;
+    color: #333;
 }
 
-.secondary-trait-container {
+.button-bar {
     display: flex;
-    flex-direction: row;
-    width: fit-content;
-    padding: 5px;
-    background-color: darkgreen;
-    border-radius: 8px;
+    justify-content: space-around;
+    padding: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
 }
 
-.roll-button {
-    width: 23.375rem;
-    height: 2.25rem;
-    background-color: #3fd83d;
+.pick-button {
+    flex: 1;
+    margin: 0 0.5rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+    background-color: #4caf50;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 20px;
+    transition: background-color 0.3s ease;
 }
 
-.column-parent {
-    display: flex;
-    flex-direction: row;
-}
-
-.left-column {
-    width: 50%;
-}
-
-.right-column {
-    width: 50%;
-}
-
-h1 {
-    color: white;
-}
-
-h2 {
-    margin-bottom: 0;
-    color: white;
-}
-
-.king-champ-title {
-    margin-bottom: 0;
-}
-
-.king-champ-name {
-    margin-top: 0;
-    margin-bottom: 3px;
-    color: rgb(173, 181, 189);
-}
-
-.options-box {
-    margin-top: 2rem;
-    background-color: #30363b;
-    width: 25rem;
-    border-radius: 8px;
-    padding: 8px;
-}
-
-.options-title {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.no-highlight {
-    user-select: none;
-}
-
-.level-input-box {
-    width: 2.5rem;
-    margin-left: 8px;
-    user-select: none;
-}
-
-.option-line {
-    display: flex;
-    height: 1.5rem;
-}
-
-.crown {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    z-index: 1;
-    left: 60px;
-    top: 88px;
-    rotate: 45deg;
-}
-
-.trait-box {
-    position: fixed;
-    background-color: #30363b;
-    padding: 8px;
-    border-radius: 4px;
-    color: white;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 2;
-}
-
-.trait-header {
-    margin: 0;
-}
-
-.trait-line {
-    color: rgb(173, 181, 189);
+.pick-button:hover {
+    background-color: #45a049;
 }
