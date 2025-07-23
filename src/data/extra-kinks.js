@@ -12,6 +12,7 @@ var items = [
     "take film photos and get them developed",
     "use handcuffs",
     "use toys on griffin",
+    "road head",
     "tie up, blindfold, and do whatever to cate",
     "fuck cate in the ass",
     "peg griffin",
