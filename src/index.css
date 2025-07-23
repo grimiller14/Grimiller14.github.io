@@ -1,44 +1,106 @@
-html {
+/* Global Styles */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    overflow: hidden;
 }
 
-/* Main Layout */
+/* App Container */
 .app-container {
     display: flex;
     flex-direction: column;
     height: 100%;
-    text-align: center;
 }
 
-.display-area {
-    flex: 1;
-    min-height: 0;
+/* Top Header Bar (assumed height ~56px if styled elsewhere) */
+.top-bar {
+    height: 56px;
+    background-color: #eee;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Main Display Area */
+.display-area {
+    flex: 1;
     overflow-y: auto;
-    max-height: calc(100vh - 260px); /* adjusts based on expected button area */
+    padding: 0.25rem;
+    display: flex;
+    max-height: 75%;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
 }
 
-.display-text {
-    font-size: 2rem;
-    line-height: 1.2;
+/* Content Wrapper (Card) */
+.content-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 3 / 4;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+}
+
+/* Text Box Styling */
+.placeholder-box {
+    width: 100%;
+    height: 100%;
+    font-size: 1.4rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     word-break: break-word;
-    padding: 0 1rem;
 }
 
-/* Constrain image to same vertical space */
+/* Image Styling */
 .position-image {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
 }
 
-/* Loading Spinner */
+/* Favorite Icon */
+.favorite-icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    z-index: 5;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.favorite-icon:hover {
+    color: #666;
+}
+
+.favorite-icon.favorited {
+    color: gold;
+}
+
+/* Loading Indicator */
 .loading-spinner {
     position: absolute;
     top: 1rem;
@@ -49,38 +111,32 @@ html {
     pointer-events: none;
 }
 
-.button-bar {
-    position: sticky;
+/* Fixed Button Bar at Bottom */
+.button-bar-fixed {
+    position: fixed;
     bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
     background-color: #fff;
-    padding: 0.75rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
     border-top: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
     z-index: 10;
 }
 
-/* Wrap roll buttons in consistent vertical space */
+/* Main Buttons */
 .main-buttons {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    margin-bottom: 0.75rem;
 }
 
-/* Undo/Redo stays small and inline */
-.undo-redo-bar {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-}
-
-/* Roll Buttons */
 .pick-button {
     width: 100%;
-    padding: 1.25rem;
-    font-size: 1.5rem;
+    padding: 0.75rem;
+    font-size: 1.25rem;
     background-color: #4caf50;
     color: white;
     border: none;
@@ -101,6 +157,13 @@ html {
 .pick-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Undo/Redo Buttons */
+.undo-redo-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
 }
 
 .small-button {
@@ -127,4 +190,73 @@ html {
 .small-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* History Section */
+.history-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.history-column {
+    min-width: 300px;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.history-text-item,
+.history-image-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Image Grid in History */
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.history-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+/* Grid-specific overrides */
+.history-column.images .history-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+}
+
+.history-column.images .history-image-item {
+    border-bottom: none;
+    padding: 0;
+}
+
+/* Responsive: Stack columns on mobile */
+@media (max-width: 600px) {
+    .history-columns {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .history-grid {
+        order: 2;
+    }
+
+    .history-column {
+        order: 1;
+    }
 }
